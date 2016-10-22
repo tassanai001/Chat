@@ -1,6 +1,6 @@
 var app = {};
 (function() {
-        app = angular.module("MainApp", ['ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'mgcrea.ngStrap']);
+        app = angular.module("MainApp", ['ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'mgcrea.ngStrap', 'firebase']);
         app.config(function ($routeProvider, $locationProvider) {
             $locationProvider.html5Mode(false).hashPrefix('!');
             $routeProvider

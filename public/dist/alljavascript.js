@@ -1,6 +1,6 @@
 var app = {};
 (function() {
-        app = angular.module("MainApp", ['ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'mgcrea.ngStrap']);
+        app = angular.module("MainApp", ['ngRoute', 'ngSanitize', 'ngResource', 'ngAnimate', 'mgcrea.ngStrap', 'firebase']);
         app.config(function ($routeProvider, $locationProvider) {
             $locationProvider.html5Mode(false).hashPrefix('!');
             $routeProvider
@@ -20,6 +20,7 @@ var app = {};
         });
     }
 )();
+
 var spinner = {};
 var token = "XXX";
 (function() {
@@ -116,20 +117,49 @@ var token = "XXX";
         }
     });
 })();
-(function(){
-    app.controller('mainCtrl', function ($scope,mainService,searchEngineService) {
-        $scope.activePage = 1; // Home
+(function() {
+    app.controller('mainCtrl', function($scope, $firebaseObject, $firebaseArray, $firebaseAuth, mainService, searchEngineService) {
+        $scope.activePage = 1;
+        $scope.text = [];
+        $scope.message = "";
+
         $scope.initMT = function() {
-            mainService.GetSample().then(function (data) {
-                $scope.testData = data;
-            });
+            var config = {
+                apiKey: "AIzaSyAbClNhb0PEnFUvx7ViemGcOB268uRaNq8",
+                authDomain: "chat-f9c5e.firebaseapp.com",
+                databaseURL: "https://chat-f9c5e.firebaseio.com",
+                storageBucket: "chat-f9c5e.appspot.com",
+                messagingSenderId: "303533600371"
+            };
+            firebase.initializeApp(config);
+            $scope.ref = firebase.database().ref().child("chat-f9c5e");
+            $scope.list = $firebaseArray($scope.ref);
+            $scope.list.$loaded()
+                .then(function(message) {
+                    console.log("Meaasge:", message);
+                    $scope.message = message;
+                })
+                .catch(function(error) {
+                    console.log("Error:", error);
+                });
         };
 
-        $scope.SubmitKeyword = function(){
-            searchEngineService.addKeyword({keywords:$scope.inputkeywords}).then(function(result){
+        $scope.SubmitKeyword = function() {
+            searchEngineService.addKeyword({
+                keywords: $scope.inputkeywords
+            }).then(function(result) {
                 console.log(result);
             })
         }
+
+        $scope.Submit = function(text) {
+            $scope.list.$add({
+                message: text
+            }).then(function(value) {
+                console.log("values: ", value);
+            });
+        }
+
     });
 })();
 
@@ -139,7 +169,7 @@ var token = "XXX";
         thisfact.GetSample = function(){
             spinner.show();
             var defer = $q.defer();
-            $http({method: 'GET', url: '/sample'}).
+            $http({method: 'GET', url: '/'}).
                 success(function(data) {
                     spinner.hide();
                     defer.resolve(data);
@@ -155,6 +185,7 @@ var token = "XXX";
 
     });
 })();
+
 (function() {
     app.controller('sampleCtrl', function ($scope, $modal, sampleService) {
         $scope.activePage = 2; //"Sample";

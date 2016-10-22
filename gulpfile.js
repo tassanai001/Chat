@@ -20,8 +20,8 @@ gulp.task('openbrower',function(){
         url: 'http://localhost:3000',
         app: 'chrome'
     };
-    gulp.src('views/index.ejs')
-        .pipe(open('', options));
+    //gulp.src('views/index.ejs')
+    //    .pipe(open('', options));
 });
 
 gulp.task('mongoexpress',function(cb){

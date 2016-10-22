@@ -4,7 +4,7 @@
         thisfact.GetSample = function(){
             spinner.show();
             var defer = $q.defer();
-            $http({method: 'GET', url: '/sample'}).
+            $http({method: 'GET', url: '/'}).
                 success(function(data) {
                     spinner.hide();
                     defer.resolve(data);

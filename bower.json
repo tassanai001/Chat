@@ -12,9 +12,11 @@
     "jquery": "*",
     "bootstrap": "^3.2.0",
     "toastr": "^2.0.3",
-    "async" : "^1.5.0",
+    "async": "^1.5.0",
     "blockUI": "*",
-    "spin.js": "~2.0.2"
+    "spin.js": "~2.0.2",
+    "firebase": "^3.5.1",
+    "angularfire": "^2.0.2"
   },
   "private": false
 }

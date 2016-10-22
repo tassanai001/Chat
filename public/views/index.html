@@ -1,3 +1,18 @@
 <div ng-init="initMT()">
-    <h1>CHAT</h1>
+    <h1>CHAT...</h1>
+    <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Type it here..." ng-model="textChat">
+                <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" ng-click="Submit(textChat)">Submit</button>
+          </span>
+            </div> <br>
+        </div>
+        <div class="col-xs-12 col-md-12">
+            <ul class="list-group" ng-repeat="value in message">
+                <li class="list-group-item">{{value.message}}</li>
+            </ul>
+        </div>
+    </div>
 </div>
